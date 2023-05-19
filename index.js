@@ -47,7 +47,7 @@ async function conectar() {
      //Eliminar ejemplo de Juan Pérez, Juan Pérez es vida
     const nuevoUsuario = new Usuario({
       nombre: 'Juan',
-      apellido: 'Pérez',
+      apellido: 'Pérez', 
       correoElectronico: 'juan.perez@example.com',
       nombreUsuario: 'juanperez',
       contrasena: await bcrypt.hash('contraseña123', 10)
@@ -75,7 +75,6 @@ app.post('/registro', async (req, res) => {
     return;
   }
 
-  // Crear un nuevo usuario
   const nuevoUsuario = new Usuario({ nombre, apellido, correoElectronico, nombreUsuario, contrasena });
 
   try {
@@ -121,9 +120,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-
-
-
 //verificar token
 function verificarAutenticacion(req, res, next) {
   const token = req.cookies.token;
@@ -143,38 +139,30 @@ function verificarAutenticacion(req, res, next) {
   }
 }
 
-
-
 //Routes //Redirección de la página con los links
 app.get('/login', (req, res) => {  
   res.sendFile(path.join(__dirname, 'views', 'login.ejs'));
 });
 
-//Se supone que verifica el token
 //middleware "verificarAutenticacion" se aplica solo a la ruta /bienvenida. Antes de que se envíe el archivo HTML de bienvenida, se verificará la autenticación del usuario//
 app.get('/bienvenida', verificarAutenticacion, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'bienvenida.html'));
 });
-
-
 
 //routes y ver la ruta de los archivos
 app.get('/registro', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'registro.ejs'));
 });
 
-
 app.get('/transmision', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'transmision.html'));
 })
-
 
 //arreglar POST sobre la conversión de XML a JSON
 app.get('/conversor', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'conversor.html'));
 })
 
-/
 // Jebus me ha escuchado
 // Jebus me ha escuchado mira bien el "a href"
 app.post('/conversor', upload.single('xmlFile'), async (req, res) => {
@@ -211,7 +199,6 @@ app.get('/api/temperaturas', async (req, res) => {
   }
 });
 
-
 //rutas para mostrar la página de temperaturas y procesar la petición para obtener las temperaturas desde la base de datos:
 app.get('/temperaturas', async (req, res) => {
   try {
@@ -225,9 +212,5 @@ app.get('/temperaturas', async (req, res) => {
     res.status(500).send('Error al obtener las temperaturas');
   }
 });
-
-
-
-
 
 app.listen(3000, () => console.log('Servidor en ejecución en el puerto 3000')); 
