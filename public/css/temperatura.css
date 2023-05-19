@@ -1,0 +1,67 @@
+title {
+    justify-content: center;
+    color: #4CAF50;
+}
+
+
+table {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    }
+    
+    thead {
+    background-color: #ddd;
+    }
+    
+    th, td {
+    text-align: center;
+    padding: 12px;
+    }
+    
+    tr:nth-child(even) {
+    background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+    }
+    
+    #form-temperatura {
+    margin-top: 24px;
+    }
+    
+    .temperatura-input {
+    display: block;
+    margin-bottom: 12px;
+    }
+    
+    .temperatura-input label {
+    display: block;
+    margin-bottom: 6px;
+    }
+    
+    .temperatura-input input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    }
+    
+    .temperatura-submit {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+    
+    .temperatura-submit:hover {
+    background-color: #3e8e41;
+    }

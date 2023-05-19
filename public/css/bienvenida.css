@@ -1,0 +1,77 @@
+/* Estilos para la página de bienvenida */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .bienvenida-message {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  
+  a {
+    display: inline-block;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  a:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para el footer */
+  
+ /* Estilos para el footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 350px; /* Agregado margen superior para separar el footer del contenido */
+  }
+  
+  
+  /* Media queries para la responsividad */
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+    
+    .bienvenida-message {
+      font-size: 24px;
+    }
+    
+    a {
+      padding: 10px 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .bienvenida-message {
+      font-size: 20px;
+    }
+    
+    a {
+      padding: 8px 16px;
+    }
+  }
+  

@@ -1,0 +1,90 @@
+<!DOCTYPE html> <!--Cambios nuevos-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temperaturas</title>
+  <link rel="stylesheet" href="/public/css/temperatura.css">
+</head>
+<body>
+  <div id="temperatura-container"><!--Contenedor-->
+    <h1>Temperaturas</h1>
+    <div class="container">
+      <h1 class="bienvenida-message">¡Bienvenido! ¿Qué deseas hacer?</h1>
+      <a href="/conversor">Convertir XML a JSON</a><br>
+      <a href="/transmision">Transmisión</a>
+    </div>
+      <h2>Nuevas temperaturas:</h2><!--Nuevas temperaturas-->
+      <table>
+        <tr>
+          <th>Fecha</th>
+          <th>Temperatura</th>
+          <th>Humedad</th>
+        </tr>
+        <% for (const temperatura of nuevasTemperaturas) { %>
+          <tr>
+            <td><%= temperatura.fecha.toLocaleString(undefined, { timeZone: 'UTC' }) %></td>
+            <td><%= temperatura.temp %>ºC</td>
+            <td><%= temperatura.hum %>%</td>
+          </tr>
+        <% } %>
+      </table>
+  
+      <h3>Temperatura media de las nuevas temperaturas:</h3> <!--Temperatura media de las nuevas temperaturas-->
+      <% if (nuevasTemperaturas.length > 0) { %>
+        <% let temperaturaTotal = 0; %>
+        <% let temperaturaMaxima = Number.MIN_SAFE_INTEGER; %>
+        <% let temperaturaMinima = Number.MAX_SAFE_INTEGER; %>
+        <% for (const temperatura of nuevasTemperaturas) { %>
+          <% temperaturaTotal += temperatura.temp; %>
+          <% if (temperatura.temp > temperaturaMaxima) { %>
+            <% temperaturaMaxima = temperatura.temp; %>
+          <% } %>
+          <% if (temperatura.temp < temperaturaMinima) { %>
+            <% temperaturaMinima = temperatura.temp; %>
+          <% } %>
+        <% } %>
+        <% const temperaturaMedia = temperaturaTotal / nuevasTemperaturas.length; %>
+        <p><%= temperaturaMedia.toFixed(2) %> °C</p>
+        <p>Temperatura máxima registrada: <%= temperaturaMaxima %> °C</p>
+        <p>Temperatura mínima registrada: <%= temperaturaMinima %> °C</p>
+      <% } else { %>
+        <p>No hay nuevas temperaturas.</p>
+      <% } %>
+  
+  
+    <h2>Últimas 10 temperaturas:</h2> <!--Últimas 10 temperaturas-->
+    <table>
+      <tr>
+        <th>Fecha</th>
+        <th>Temperatura</th> 
+        <th>Humedad</th>
+      </tr>
+      <% for (const temperatura of temperaturas) { %>
+        <tr>
+          <td><%= temperatura.fecha.toLocaleString(undefined, { timeZone: 'UTC' }) %></td>
+          <td><%= temperatura.temp %>ºC</td>
+          <td><%= temperatura.hum %>%</td>
+        </tr>
+      <% } %>
+    </table>
+  </div>
+  <script>
+    setInterval(() => {
+      // Realizar una solicitud AJAX al servidor para obtener los nuevos datos de temperatura
+      fetch('/temperaturas')
+        .then(response => response.text())
+        .then(html => {
+          // Actualizar el contenido del contenedor con los nuevos datos de temperatura
+          console.log("sssss"+html);
+          document.getElementById('temperatura-container').innerHTML = html;
+        })
+        .catch(error => {
+          console.error('Error al obtener los nuevos datos de temperatura:', error);
+        });
+    }, 3000); // Realizar la solicitud cada 3 segundos (ajusta el intervalo según tus necesidades)
+  </script>
+  <footer>
+    <!-- Contenido del footer -->
+  </footer>
+</body>
+</html>

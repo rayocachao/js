@@ -1,0 +1,124 @@
+/* 
+const mongoose = require('mongoose'); //mongoosewe
+const bcrypt = require('bcrypt'); //hashing de contraseña (inmune a ataques de diccionario)
+const Usuario = require('./models/usuario'); // se importa el modelo de usuario --> Crea o busca usuarios
+const Temperatura = require('./models/temperatura'); // importamos el modelo de Temperatura
+const conversor = require('./public/conversor');
+
+const port = 3000;
+const path = require('path');
+
+const express = require('express');
+
+const app = express();
+app.use(express.json());
+app.use('/public', express.static(path.join(__dirname, 'public'))); //CSS en la carpeta "public"
+
+const ejs = require('ejs');
+app.set('view engine', 'ejs');
+
+const bodyParser = require('body-parser'); //Analiza solicitudes HTTP entrantes
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
+//routes
+app.get('/', (req, res) => {  
+  res.sendFile(path.join(__dirname, 'public', 'html','logueo.html'));
+});
+
+
+async function conectar() {
+  try {
+    await mongoose.connect('mongodb+srv://admin:Almi123@cluster0.m970ldu.mongodb.net/?retryWrites=true&', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log('Conexión exitosa a la base de datos');
+     //Eliminar ejemplo de Juan Pérez, Juan Pérez es vida
+    const nuevoUsuario = new Usuario({
+      nombre: 'Juan',
+      apellido: 'Pérez',
+      correoElectronico: 'juan.perez@example.com',
+      nombreUsuario: 'juanperez',
+      contrasena: await bcrypt.hash('contraseña123', 10)
+    });
+    
+    await nuevoUsuario.save();
+    console.log('Usuario guardado exitosamente:', nuevoUsuario);
+    
+  } catch (error) {
+    console.error('Error al conectar con la base de datos:', error);
+  }
+}
+
+conectar();
+
+app.post('/registro', async (req, res) => {
+  const { nombre, apellido, correoElectronico, nombreUsuario, contrasena } = req.body;
+  const nuevoUsuario = new Usuario({ nombre, apellido, correoElectronico, nombreUsuario, contrasena }); // se crea un nuevo usuario usando el modelo de usuario importado
+  try {
+    await nuevoUsuario.save();
+    res.send('Registro exitoso');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`Error en el registro: ${err.message}`); // Modifica el mensaje de error para incluir el error real
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const { nombreUsuario, contrasena } = req.body;
+  try {
+    const usuario = await Usuario.findOne({ nombreUsuario }); //Busca el usuario usando el modelo de usuario importado
+    if (usuario && await usuario.validarContrasena(contrasena)) {
+      res.redirect('/bienvenida'); //Redirecciona a la página de bienvenida (darle color)
+    } else {
+      res.status(401).send('Credenciales incorrectas');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error en el inicio de sesión');
+  }
+});
+
+//Routes //Redirección de la página con los links
+app.get('/bienvenida', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'bienvenida.html'));
+});
+
+
+//routes y ver la ruta de los archivos
+app.get('/transmision', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'transmision.html'));
+})
+
+//arreglar POST sobre la conversión de XML a JSON
+app.get('/conversor', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'conversor.html'));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+//temperaturas no borrar
+//rutas para mostrar la página de temperaturas y procesar la petición para obtener las temperaturas desde la base de datos:
+app.get('/temperaturas', async (req, res) => {
+  try {
+    const temperaturas = await Temperatura.find().sort({ fecha: -1 }); // consulta la base de datos para obtener las temperaturas ordenadas por fecha
+    res.render('temperaturas', { temperaturas }); // renderiza la plantilla EJS con los datos de temperatura y humedad
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener las temperaturas');
+  }
+});
+
+app.listen(3000, () => console.log('Servidor en ejecución en el puerto 3000')); */

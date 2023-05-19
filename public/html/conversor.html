@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor XML a JSON</title>
+</head>
+<body>
+  <h1>Conversor XML a JSON</h1>
+  <form id="conversorForm" action="/conversor" method="POST" enctype="multipart/form-data">
+    <input type="text" name="nombreArchivo" placeholder="Nombre del archivo JSON" required>
+    <input type="file" name="xmlFile" required>
+    <button type="submit">Convertir y guardar</button>
+  </form>
+    
+  <div class="container">
+    <a href="/temperaturas">Ver Temperaturas en Vivo</a><br>
+    <a href="/transmision">Transmisión</a>
+  </div>
+  <script src="/public/conversor.js"></script>
+</body>
+</html>
